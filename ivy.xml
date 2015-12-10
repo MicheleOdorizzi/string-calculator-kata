@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
+
+    <info organisation="mo-test" module="string-calculator" revision="1.0.0" />
+
+    <configurations>        
+        <conf name="test" description="Librerie che servono per i test unitari del componente." />
+        <conf name="build-test" description="Librerie che servono per il build delle classi di test." />
+    </configurations>
+
+    <dependencies>     
+        <dependency org="junit" name="junit" rev="4.11" conf="test->default;build-test->default" />
+    </dependencies>
+
+</ivy-module>

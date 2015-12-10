@@ -1,0 +1,9 @@
+<ivysettings>
+	<settings defaultResolver="main" />
+	<resolvers>
+		<ibiblio name="public" m2compatible="true" root="${ivy.public.resolver}" />
+		<chain name="main">
+			<resolver ref="public" />
+		</chain>
+	</resolvers>
+</ivysettings>

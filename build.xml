@@ -1,0 +1,56 @@
+<project name="string-calculator" default="build" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<description>
+		------------------------------------------------------------------------
+		Build script del progetto string-calculator.
+		------------------------------------------------------------------------
+	</description>
+
+	<property file="${basedir}/build.properties" />
+
+	<target name="clean" description="--> rimuove il folder che ospita tutti gli artifact generati dal build del progetto.">
+		<delete dir="${target.dir}" />
+	</target>
+
+	<target name="init" description="--> inizializza la struttura dei folder per gli artifact del progetto.">
+		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${classes.test.dir}" />
+		<mkdir dir="${junit.report.dir}" />
+	</target>
+
+	<target name="compile" description="--> compila le classi main.">
+		<javac srcdir="${src.main.dir}" destdir="${classes.dir}" />
+	</target>
+
+	<target name="compile:test" description="--> compila le classi di test.">
+		<ivy:configure file="${basedir}/ivysettings.xml" override="false" />
+		<ivy:cachepath pathid="build-test.classpath" />
+
+		<javac srcdir="${src.test.dir}" destdir="${classes.test.dir}">
+			<classpath>
+				<path refid="build-test.classpath" />
+				<pathelement location="${classes.dir}" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="test" description="--> effettua i test con junit.">
+		<ivy:configure file="${basedir}/ivysettings.xml" override="false" />
+		<ivy:cachepath pathid="test.classpath" />
+
+		<junit printsummary="yes" fork="yes" haltonfailure="no" showoutput="yes">
+			<classpath>
+				<path refid="test.classpath" />
+				<pathelement location="${classes.test.dir}" />
+				<pathelement location="${classes.dir}" />
+			</classpath>
+			<batchtest todir="${junit.report.dir}">
+				<fileset dir="${src.test.dir}" />
+			</batchtest>
+			<formatter type="plain" />
+		</junit>
+
+	</target>
+
+	<target name="build" depends="clean, init, compile, compile:test, test" description="--> main target del progetto. Richiama in cascata tutti gli altri per effettuare il build completo." />
+</project>
