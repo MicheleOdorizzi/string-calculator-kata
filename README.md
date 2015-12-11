@@ -1,56 +1,47 @@
 # String Calculator Kata
-The following is a TDD Kata, an exercise in coding, refactoring and test-first, that you should apply daily for at least 15-30 minutes.
+Questo esercizio è stato svolto utilizzando Java, vers. 1.7, come linguaggio di programmazione e Ant, vers.1.9.6, come tool di build del progetto. Per la gestione delle dipendenze è stato utilizzato Ivy, vers 2.3.0.
 
-## Before you start
-* Try not to read ahead.
-* Do one task at a time. The trick is to learn to work incrementally.
-* Make sure you only test for correct inputs. There is no need to test for invalid inputs for this kata.
+## Struttura del progetto
+La struttura è molto semplice ed è questa:
+```
+.
+├── src
+│   ├── main
+│   │   └── java
+│   └── test
+│       └── java
+├── build.xml
+├── build.properties
+├── ivy.xml
+├── ivysettings.xml
+└── ivy-install.xml
+```
+dove
 
-## The kata
+* `src/main/java` ospita i sorgenti del progetto;
+* `src/test/java` contiene le classi di test;
+* `build.xml` è lo script di build per Ant;
+* `build.properties` è il file delle proprietà utilizzate da Ant;
+* `ivy.xml` è il file utilizzato da Ivy per la gestione delle dipendenze e la definizione delle configurazioni delle librerie. In questo caso l'unica dipendenza è verso JUnit, utilizzato per la compilazione delle classi di test e per l'esecuzione dei test stessi;
+* `ivysettings.xml` definisce le impostazioni per Ivy. In questo caso contiene l'indicazione dei resolver per il download delle librerie;
+* `ivy-install.xml` è lo script da utilizzare nel caso in cui Ivy non sia presente sulla macchina su cui si vuole compilare il progetto.
 
-### Step 1: the simplest thing
-Create a simple String calculator with a method ``int add(String numbers)``.
+In questa struttura trova collocazione la cartella `target`, destinata ad ospitare tutti gli artifact del progetto: classi main e di test compilate, eventuale jar del progetto, report dei test di JUnit, ecc.
 
-* The method can take 0, 1 or 2 numbers, and will return their sum (for an empty string it will return 0) for example ``""`` or ``"1"`` or ``"1,2"``.
-* Start with the simplest test case of an empty string and move to 1 and two numbers.
-* Remember to solve things as simply as possible so that you force yourself to write tests you did not think about.
-* Remember to refactor after each passing test.
+## Prerequisiti
+Gli unici prerequisiti per la compilazione del progetto sono la presenza di Java, vers. 1.7, e Ant, vers. 1.9.6. Ivy può essere installato eseguendo una-tantum da console lo script ivy-install.xml:
+```
+ant -f ivy-install.xml
+```
+nella cartella root del progetto. Con l'esecuzione di questo comando la libreria di Ivy sarà caricata nella cartella `$HOME/.ant/lib` e quindi disponibile come libreria aggiuntiva di Ant
 
-### Step 2: handle an unknown amount of numbers
-Allow the ``add()`` method to handle an unknown amount of numbers.
+## Compilazione e test
+È sufficiente eseguire da console il comando
+```
+ant
+```
+nella cartella root del progetto. Lo script effettua, nell'ordine:
 
-### Step 3: handle new lines between numbers
-Allow the ``add()`` method to handle new lines between numbers (instead of commas).
-
-* the following input is ok:  ``"1\n2,3"`` (will equal 6)
-* the following input is NOT ok:  ``"1,\n"`` (not need to prove it - just clarifying)
-
-### Step 4: support different delimiters
-Support different delimiters: to change a delimiter, the beginning of the string will contain a separate line that looks like this:   
-
-``"//[delimiter]\n[numbers...]"``
-
-For example ``"//;\n1;2"`` should return 3 where the default delimiter is ``';'``.
-
-The first line is optional. 
-All existing scenarios should still be supported.
-
-### Step 5: negative numbers
-Calling ``add()`` with a negative number will throw an exception ``"negatives not allowed"`` - and the negative that was passed.
-
-For example ``add("1,4,-1")`` should throw an exception with the message ``"negatives not allowed: -1"``.
-
-If there are multiple negatives, show all of them in the exception message.
-
-### Step 6: ignore big numbers
-Numbers bigger than 1000 should be ignored, so adding 2 + 1001  = 2
-
-## General requirements
-- Use whatever language and frameworks you want. Use something that you know well.
-- Provide a README with instructions on how to compile and run the application.
-
-**IMPORTANT:**  Implement the requirements focusing on **writing the best code** you can produce.
-
-**CODE SUBMISSION:** Add the code to your own Github account and send us the link.
-
-Credits to [Roy Osherove](http://osherove.com/tdd-kata-1) for the original idea.
+* la rimozione di tutti gli artifact già presenti nella cartella `target`;
+* la compilazione dei sorgenti del progetto e delle classi di test;
+* l'esecuzione del test di JUnit. Per questi viene prodotto un report nella cartella `target/junit-reports/`.
