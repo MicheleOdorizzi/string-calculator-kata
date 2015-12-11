@@ -16,7 +16,7 @@ La struttura è molto semplice ed è questa:
 ├── ivysettings.xml
 └── ivy-install.xml
 ```
-dove
+dove 
 
 * `src/main/java` ospita i sorgenti del progetto;
 * `src/test/java` contiene le classi di test;
@@ -33,15 +33,15 @@ Gli unici prerequisiti per la compilazione del progetto sono la presenza di Java
 ```
 ant -f ivy-install.xml
 ```
-nella cartella root del progetto. Con l'esecuzione di questo comando la libreria di Ivy sarà caricata nella cartella `$HOME/.ant/lib` e quindi disponibile come libreria aggiuntiva di Ant
+nella cartella root del progetto. Con l'esecuzione di questo comando la libreria di Ivy sarà caricata nella cartella `$HOME/.ant/lib` e quindi disponibile come libreria aggiuntiva di Ant.
 
 ## Compilazione e test
-È sufficiente eseguire da console il comando
+È sufficiente eseguire il comando
 ```
 ant
 ```
 nella cartella root del progetto. Lo script effettua, nell'ordine:
 
-* la rimozione di tutti gli artifact già presenti nella cartella `target`;
+* la rimozione di tutti gli artifact già presenti nella cartella degli artifact;
 * la compilazione dei sorgenti del progetto e delle classi di test;
 * l'esecuzione del test di JUnit. Per questi viene prodotto un report nella cartella `target/junit-reports/`.
